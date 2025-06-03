@@ -83,4 +83,4 @@ Follow these steps to set up and run this project on your local machine.
    Place the entire `data/` folder inside the root of the project directory — the same directory where your scripts and `requirements.txt` are located.
 6. **Run Script**
    ```bash
-   python3 DigitRecognition.py
+   python3 ViolenceDetection.py
