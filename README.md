@@ -40,3 +40,47 @@ After the ResNet feature extraction:
 This streamlined architecture ensures the model is both **powerful and efficient**, making it suitable for real-time or batch video analysis.
 
 ---
+
+## 🚀 Getting Started
+
+Follow these steps to set up and run this project on your local machine.
+
+### 📁 Prerequisites
+
+- Python 3.x installed
+- `pip` (Python package manager)
+
+---
+
+### ⚙️ Step-by-Step Setup
+
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/AryaHaldankar/ViolenceDetection/.git
+   cd ViolenceDetection
+
+2. **Create a virtual environment**
+   ```bash
+   python -m venv venv
+
+3. **Activate the Virtual Environment**  
+   ***- On Wndows***
+   ```bash
+   venv\Scripts\activate
+   ```  
+  ***- On Mac/Linux***
+  ```bash
+  source venv/bin/activate
+  ```
+4. **Install Project Dependencies**
+   ```bash
+   pip install -r requirements.txt
+   
+5. **Add the `data/` Folder**
+
+   Download the `data` folder from the provided link [Drive Link](https://drive.google.com/drive/folders/1O_xsb7ZFBCjrQVCkKu9fYOze12fGPXMB?usp=sharing).
+
+   Place the entire `data/` folder inside the root of the project directory — the same directory where your scripts and `requirements.txt` are located.
+6. **Run Script**
+   ```bash
+   python3 DigitRecognition.py
