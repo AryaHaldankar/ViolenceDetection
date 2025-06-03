@@ -56,8 +56,8 @@ def get_all_file_paths(directory):
 paths_nonvi = []
 paths_vi = []
 for i in range(1, 6):
-  directory_nonvi = f'/content/drive/MyDrive/Violence Detection/data/violent_flow/movies/{i}/NonViolence'
-  directory_vi = f'/content/drive/MyDrive/Violence Detection/data/violent_flow/movies/{i}/Violence'
+  directory_nonvi = f'data/violent_flow/movies/{i}/NonViolence'
+  directory_vi = f'data/violent_flow/movies/{i}/Violence'
   paths_nonvi.extend(get_all_file_paths(directory_nonvi))
   paths_vi.extend(get_all_file_paths(directory_vi))
 
@@ -77,11 +77,11 @@ shuffled_data = data.sample(frac=1).reset_index(drop=True)
 
 shuffled_data_numpy = shuffled_data.to_numpy()
 
-np.save('/content/drive/MyDrive/Violence Detection/data.npy', shuffled_data_numpy)
+np.save('data.npy', shuffled_data_numpy)
 
 """**Transfer train the ResNet model**"""
 
-data = np.load('/content/drive/MyDrive/Violence Detection/data.npy', allow_pickle = True)
+data = np.load('data.npy', allow_pickle = True)
 
 base_model = keras.applications.ResNet152V2(
     include_top=False,
@@ -128,7 +128,7 @@ model.compile(
 epochs = 6
 model.fit(x_train, y_train, epochs=epochs, batch_size = 32)
 
-model.save('/content/drive/MyDrive/Violence Detection/model.keras')
+model.save('model.keras')
 
 model.evaluate(x_test, y_test, batch_size = 32)
 
@@ -167,11 +167,11 @@ x = base_model(inputs)
 y = keras.layers.GlobalAveragePooling2D()(x)
 outputs = keras.layers.Dense(1, activation = 'sigmoid')(y)
 model = keras.Model(inputs, outputs)
-model.load_weights('/content/drive/MyDrive/Violence Detection/model.keras')
+model.load_weights('model.keras')
 
 #non violent video 0 = non violent, 1 = violent
-print(video_violence('/content/drive/MyDrive/Violence Detection/data/violent_flow/movies/1/NonViolence/football_crowds__Giants_of_Brazil_6_of_6__anandaliyanage__lq-GBA34iEI.avi'))
+print(video_violence('data/violent_flow/movies/1/NonViolence/football_crowds__Giants_of_Brazil_6_of_6__anandaliyanage__lq-GBA34iEI.avi'))
 
 #violent video 0 = non violent, 1 = violent
-print(video_violence('/content/drive/MyDrive/Violence Detection/data/violent_flow/movies/1/Violence/Hooligans_violence__5x5_russian_hooligans_fight__Parkhom__GnfpwW6sMkc.avi'))
+print(video_violence('data/violent_flow/movies/1/Violence/Hooligans_violence__5x5_russian_hooligans_fight__Parkhom__GnfpwW6sMkc.avi'))
 
