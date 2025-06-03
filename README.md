@@ -1,17 +1,47 @@
-# Violence Detection in Videos  
-## Access data  
-Access drive to find the videos used for training.  
-model.keras is the trained model.  
-data.npy is the training data.  
-Drive link: https://drive.google.com/file/d/1R4j2vbpONmZ-R1t7VBFEji6EMwyMA6xV/view?usp=drive_link  
-  
-## Steps to use the trained model on sample video
-Step1: Load the model  
-![Screenshot from 2025-06-02 11-55-41](https://github.com/user-attachments/assets/30e39ff6-cb37-4584-be18-5d7cadedaf0a)  
-  
-Step2: Define helper function to handle video preprocessing:  
-![Screenshot from 2025-06-02 12-02-35](https://github.com/user-attachments/assets/92be0960-8589-4cc9-9f07-109331caad02)
+# 🔍 Violence Detection in Videos Using Deep Learning
 
-  
-Step3: Call helper function and pass the video file path to it  
-![Screenshot from 2025-06-02 12-05-12](https://github.com/user-attachments/assets/13f7fcf6-c028-4e7c-8e04-58c9287dff89)
+This project is a deep learning-based system that analyzes video clips and detects the **presence of violent content**. It does this by sampling frames from the video and using a trained ResNet152V2-based model to make predictions.
+
+---
+
+## 🎯 Project Goal
+
+The goal is to build an **automated content moderation tool** that can:
+- Help platforms flag potentially violent video clips
+- Support content reviewers by pre-screening videos
+- Enhance safety features in apps involving user-generated content
+
+---
+
+## 🧠 How It Works
+
+1. **Frame Sampling**:  
+   Instead of analyzing every single frame (which is computationally expensive), the script **randomly selects 20 frames** from different time points in the video.
+
+2. **Image Preprocessing**:  
+   Each frame is resized to a standard shape (320x240) and prepared for input using `preprocess_input()`.
+
+3. **Prediction**:  
+   Each frame is passed through a trained **Convolutional Neural Network (CNN)**, and the results are averaged to determine the final violence score for the video.
+
+---
+
+## 🤖 Model Architecture
+
+The model uses **ResNet152V2** as a base feature extractor, without pre-trained weights. It’s followed by:
+- **Global Average Pooling** (to reduce dimensions)
+- A **Dense Layer** with sigmoid activation for binary classification (violent or non-violent)
+
+```python
+base_model = keras.applications.ResNet152V2(
+    include_top=False,
+    weights=None,
+    classifier_activation="softmax",
+    name="resnet152v2",
+)
+
+inputs = keras.layers.Input(shape=(240, 320, 3))
+x = base_model(inputs)
+y = keras.layers.GlobalAveragePooling2D()(x)
+outputs = keras.layers.Dense(1, activation='sigmoid')(y)
+model = keras.Model(inputs, outputs)
